@@ -1,0 +1,23 @@
+[package]
+name = "txasm"
+version = "0.1.0"
+edition = "2021"
+authors = ["TxAsm Contributors"]
+description = "Low-level Solana transaction builder with byte-level control"
+license = "MIT"
+repository = "https://github.com/yourusername/txasm"
+keywords = ["solana", "transaction", "blockchain", "low-level", "encoder"]
+categories = ["cryptography", "encoding"]
+
+[dependencies]
+solana-sdk = "1.18"
+bincode = "1.3"
+serde = { version = "1.0", features = ["derive"] }
+borsh = "1.5"
+bs58 = "0.5"
+sha2 = "0.10"
+thiserror = "1.0"
+bytemuck = { version = "1.14", features = ["derive"] }
+
+[dev-dependencies]
+hex = "0.4"

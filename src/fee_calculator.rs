@@ -199,7 +199,7 @@ pub enum TransactionUrgency {
 
 /// Helper function to create compute budget instructions
 pub mod compute_budget {
-    use super::*;
+    
 
     /// Compute budget program ID
     pub const COMPUTE_BUDGET_PROGRAM_ID: [u8; 32] = [

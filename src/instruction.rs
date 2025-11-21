@@ -6,7 +6,7 @@
 use crate::error::{Result, TxAsmError};
 use crate::serialization::{
     ByteSerialize, encode_compact_u16, decode_compact_u16,
-    encode_pubkey, decode_pubkey, encode_u8, decode_u8,
+    encode_pubkey, encode_u8, decode_u8,
 };
 use solana_sdk::pubkey::Pubkey;
 use std::io::Cursor;
@@ -120,7 +120,7 @@ impl ByteSerialize for RawInstruction {
         
         // Encode accounts
         encode_compact_u16(self.accounts.len() as u16, writer)?;
-        for account in &self.accounts {
+        for _account in &self.accounts {
             encode_u8(0, writer)?; // Account index placeholder
         }
         

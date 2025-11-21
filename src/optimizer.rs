@@ -3,9 +3,8 @@
 //! This module provides various optimization techniques to reduce transaction size,
 //! improve efficiency, and minimize costs.
 
-use crate::error::{Result, TxAsmError};
-use crate::transaction::{CompiledTransaction, CompiledMessage, CompiledInstruction};
-use std::collections::HashMap;
+use crate::error::Result;
+use crate::transaction::CompiledTransaction;
 
 /// Transaction optimization strategies
 #[derive(Debug, Clone, Copy, PartialEq)]

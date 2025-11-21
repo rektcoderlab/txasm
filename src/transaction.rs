@@ -6,13 +6,13 @@
 use crate::error::{Result, TxAsmError};
 use crate::instruction::RawInstruction;
 use crate::serialization::{
-    ByteSerialize, encode_compact_u16, encode_pubkey, encode_u8, encode_u64,
-    decode_compact_u16, decode_pubkey, decode_u8, decode_u64,
+    ByteSerialize, encode_compact_u16, encode_pubkey, encode_u8,
+    decode_compact_u16, decode_pubkey, decode_u8,
 };
 use solana_sdk::{
     hash::Hash,
     pubkey::Pubkey,
-    signature::{Keypair, Signature, Signer},
+    signature::{Keypair, Signer},
 };
 use std::collections::HashMap;
 use std::io::Cursor;
@@ -457,7 +457,7 @@ impl Default for TransactionBuilder {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::instruction::{InstructionEncoder, AccountMeta};
+    use crate::instruction::InstructionEncoder;
 
     #[test]
     fn test_message_header() {

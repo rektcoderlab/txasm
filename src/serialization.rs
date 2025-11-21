@@ -41,7 +41,7 @@ pub fn decode_compact_u16(cursor: &mut Cursor<&[u8]>) -> Result<u16> {
     let mut value: u16 = 0;
     let mut shift = 0;
 
-    for i in 0..3 {
+    for _i in 0..3 {
         let position = cursor.position() as usize;
         let data = cursor.get_ref();
         

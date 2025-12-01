@@ -122,39 +122,40 @@ fn example_fee_calculation() -> Result<(), Box<dyn std::error::Error>> {
 
 fn example_optimization() -> Result<(), Box<dyn std::error::Error>> {
     println!("Example 4: Transaction Optimization");
-    println!("------------------------------------");
+    println!("-----------------------------------");
 
     let payer = Keypair::new();
     let program_id = Pubkey::new_unique();
-    
-    // Create transaction with multiple instructions
-    let mut builder = TransactionBuilder::new()
+    let account1 = Pubkey::new_unique();
+    let account2 = Pubkey::new_unique();
+
+    // Create a transaction with redundant account declarations
+    let instruction1 = InstructionEncoder::from_pubkey(&program_id)
+        .signer(payer.pubkey().to_bytes(), true)
+        .writable(account1.to_bytes(), false)
+        .build();
+    let instruction2 = InstructionEncoder::from_pubkey(&program_id)
+        .signer(payer.pubkey().to_bytes(), true) // Redundant `payer`
+        .writable(account2.to_bytes(), false)
+        .build();
+
+    let transaction = TransactionBuilder::new()
         .payer_pubkey(&payer.pubkey())
-        .recent_blockhash(Hash::default().to_bytes());
+        .recent_blockhash(Hash::default().to_bytes())
+        .add_instruction(instruction1)
+        .add_instruction(instruction2)
+        .build_unsigned()?;
 
-    for i in 0..3 {
-        let instruction = InstructionEncoder::from_pubkey(&program_id)
-            .signer(payer.pubkey().to_bytes(), true)
-            .append_u8(i)
-            .build();
-        builder = builder.add_instruction(instruction);
-    }
-
-    let transaction = builder.build_unsigned()?;
-
-    // Analyze and optimize
+    // Analyze the transaction with the `TransactionOptimizer`
     let optimizer = TransactionOptimizer::default();
     let analysis = optimizer.analyze(&transaction);
-    
-    println!("Transaction Analysis:");
-    println!("  Total size: {} bytes", analysis.total_size);
-    println!("  Signatures: {} ({} bytes)", analysis.num_signatures, analysis.signature_bytes);
-    println!("  Accounts: {} ({} bytes)", analysis.num_accounts, analysis.account_bytes);
-    println!("  Instructions: {}", analysis.num_instructions);
-    println!("  Efficiency score: {}/100", optimizer.calculate_efficiency_score(&transaction));
-    
+
+    println!("Transaction Analysis Report:");
+    println!("  - Initial Size: {} bytes", analysis.total_size);
+    println!("  - Efficiency Score: {}/100", optimizer.calculate_efficiency_score(&transaction));
+
     if !analysis.suggestions.is_empty() {
-        println!("\n  Optimization suggestions:");
+        println!("  Optimization Suggestions:");
         for suggestion in &analysis.suggestions {
             println!("    - {}", suggestion);
         }

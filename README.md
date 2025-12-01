@@ -339,11 +339,9 @@ MIT License
 - [ ] SIMD instruction support
 - [ ] Transaction scheduling utilities
 
-## Support
+## Contact
 
-For questions and support:
-- Open an issue on GitHub
-- Join our community discussions
-- Check the [examples](./examples/) directory
+- https://rektcoderlab.com
+- https://x.com/rektcoderlab
 
 ---
